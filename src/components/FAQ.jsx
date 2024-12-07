@@ -9,7 +9,7 @@ const FAQ = () => {
   return (
     <div className="px-4 py-40">
       <div className="mx-auto max-w-3xl">
-        <h3 className="mb-4 text-center text-3xl font-semibold">
+        <h3 className="mb-4 text-center text-3xl font-semibold text-black">
           Frequently asked questions
         </h3>
         <Question title="How does the AI summarization work?" defaultOpen>
