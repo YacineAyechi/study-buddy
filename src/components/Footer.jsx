@@ -7,7 +7,7 @@ import Image from "next/image";
 
 export const Footer = () => {
   return (
-    <footer className="relative overflow-hidden py-12 px-4 md:px-40">
+    <footer className="relative overflow-hidden py-12 px-4 md:px-40 bg-zinc-50 ">
       <div className="relative z-20 grid grid-cols-12 gap-x-1.5 gap-y-6">
         <LogoColumn />
         <GenericColumn
