@@ -7,11 +7,16 @@ import useMeasure from "react-use-measure";
 
 const FAQ = () => {
   return (
-    <div className="px-4 py-40">
+    <div className="px-4 py-40 bg-[--delft-blue]">
       <div className="mx-auto max-w-3xl">
-        <h3 className="mb-4 text-center text-3xl font-semibold text-black">
+        {/* <h3 className="mb-6 text-white text-center text-4xl font-semibold">
           Frequently asked questions
-        </h3>
+        </h3> */}
+
+        <h2 className="mb-6 text-4xl text-center font-bold md:text-5xl text-slate-50">
+          Frequently asked questions
+          <div className="border-2 border-[--poppy] mt-3 rounded-full w-1/2 flex items-center justify-center mx-auto"></div>
+        </h2>
         <Question title="How does the AI summarization work?" defaultOpen>
           <p>
             Our AI technology analyzes your uploaded documents, identifying key
@@ -50,7 +55,7 @@ const Question = ({ title, children, defaultOpen = false }) => {
   return (
     <motion.div
       animate={open ? "open" : "closed"}
-      className="border-b-[1px] border-b-slate-300"
+      className="border-b-[1px] border-b-slate-300 bg-slate-100 px-4 mb-2 rounded-lg"
     >
       <button
         onClick={() => setOpen((pv) => !pv)}

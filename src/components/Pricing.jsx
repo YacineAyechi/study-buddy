@@ -8,7 +8,7 @@ import Link from "next/link";
 const Pricing = () => {
   const [selected, setSelected] = useState("annual");
   return (
-    <div className="bg-zinc-50 ">
+    <div>
       <section className="mx-auto max-w-7xl px-2 py-24 md:px-4">
         <h2 className="mx-auto mb-4 max-w-2xl text-center text-4xl font-bold leading-[1.15] md:text-6xl md:leading-[1.15]">
           Pricing
