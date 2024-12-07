@@ -1,21 +1,24 @@
+@import url("https://fonts.googleapis.com/css2?family=Parkinsans:wght@300..800&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --poppy: #d64045ff;
+  --poppy-dark: #ca2b30;
+  --mint-green: #e9fff9ff;
+  --non-photo-blue: #9ed8dbff;
+  --ucla-blue: #467599ff;
+  --delft-blue: #1d3354ff;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Parkinsans", serif;
 }
