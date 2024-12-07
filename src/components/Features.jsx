@@ -16,7 +16,7 @@ const Features = () => {
       <div className="mb-4 grid grid-cols-12 gap-4">
         <BounceCard className="col-span-12 md:col-span-4">
           <CardTitle>AI-Powered Summaries</CardTitle>
-          <div className="absolute bottom-0 left-4 right-4 top-32 translate-y-8 rounded-t-2xl p-4 bg-[#67d1d6]  transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg]">
+          <div className="absolute bottom-0 left-4 right-4 top-32 translate-y-8 rounded-t-2xl p-4 bg-[--non-photo-blue]  transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg]">
             <span className="block text-center font-semibold text-white">
               Get instant, comprehensive summaries of any document, highlighting
               key concepts and main ideas
@@ -25,7 +25,7 @@ const Features = () => {
         </BounceCard>
         <BounceCard className="col-span-12 md:col-span-8">
           <CardTitle>Smart Quiz Generation</CardTitle>
-          <div className="absolute bottom-0 left-4 right-4 top-32 translate-y-8 rounded-t-2xl p-4 bg-[--non-photo-blue]  transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg]">
+          <div className="absolute bottom-0 left-4 right-4 top-32 translate-y-8 rounded-t-2xl p-4 bg-[--non-photo-blue] transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg]">
             <span className="block text-center font-semibold text-white">
               AI creates personalized quizzes that adapt to your knowledge level
               and learning progress
@@ -36,7 +36,7 @@ const Features = () => {
       <div className="grid grid-cols-12 gap-4">
         <BounceCard className="col-span-12 md:col-span-8">
           <CardTitle>Interactive Flashcards</CardTitle>
-          <div className="absolute bottom-0 left-4 right-4 top-32 translate-y-8 rounded-t-2xl p-4 bg-[--non-photo-blue]  transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg]">
+          <div className="absolute bottom-0 left-4 right-4 top-32 translate-y-8 rounded-t-2xl p-4 bg-[--non-photo-blue] transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg]">
             <span className="block text-center font-semibold text-white">
               Dynamic flashcard sets generated from your documents with spaced
               repetition learning

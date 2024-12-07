@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { FiCheckCircle, FiXSquare } from "react-icons/fi";
+import Link from "next/link";
 
 const Pricing = () => {
   const [selected, setSelected] = useState("annual");
@@ -13,11 +14,12 @@ const Pricing = () => {
           Pricing
         </h2>
         <Toggle selected={selected} setSelected={setSelected} />
-        <div className="mt-6 grid grid-cols-1 gap-6 lg:mt-12 lg:grid-cols-3 lg:gap-8">
+        <div className="mt-6 grid grid-cols-1 gap-6 lg:mt-12 lg:grid-cols-2 lg:gap-8 max-w-4xl mx-auto">
           <PriceColumn
             title="Basic"
             price="0"
             statement="Perfect for students just getting started with AI-powered studying."
+            highlight
             items={[
               {
                 children: "2 Documents per day",
@@ -77,7 +79,7 @@ const Pricing = () => {
               },
             ]}
           />
-          <PriceColumn
+          {/* <PriceColumn
             title="Team"
             price={selected === "monthly" ? "30" : "20"}
             statement="Perfect for study groups and educational institutions."
@@ -107,7 +109,7 @@ const Pricing = () => {
                 checked: true,
               },
             ]}
-          />
+          /> */}
         </div>
       </section>
     </div>
@@ -125,11 +127,11 @@ const PriceColumn = ({ highlight, title, price, statement, items }) => {
         highlight ? "border-2 border-zinc-900 bg-white" : ""
       }`}
     >
-      {highlight && (
-        <span className="absolute right-4 top-0 -translate-y-1/2 rounded-full bg-indigo-600 px-2 py-0.5 text-sm text-white">
+      {/* {highlight && (
+        <span className="absolute right-4 top-0 -translate-y-1/2 rounded-full bg-[--poppy] px-2 py-0.5 text-sm text-white">
           Most Popular
         </span>
-      )}
+      )} */}
 
       <p className="mb-6 text-xl font-medium">{title}</p>
       <div className="mb-6 flex items-center gap-3">
@@ -173,15 +175,17 @@ const PriceColumn = ({ highlight, title, price, statement, items }) => {
         ))}
       </div>
 
-      <button
-        className={`w-full rounded-lg p-3 text-base uppercase text-white transition-colors ${
-          highlight
-            ? "bg-indigo-600 hover:bg-indigo-700"
-            : "bg-zinc-900 hover:bg-zinc-700"
-        }`}
-      >
-        Try it now
-      </button>
+      <Link href="/login">
+        <button
+          className={`w-full rounded-lg p-3 text-base uppercase text-white transition-colors ${
+            highlight
+              ? "bg-[--poppy] hover:bg-[--poppy-dark]"
+              : "bg-zinc-900 hover:bg-zinc-700"
+          }`}
+        >
+          Try it now
+        </button>
+      </Link>
     </div>
   );
 };
@@ -224,7 +228,7 @@ const CheckListItem = ({ children, checked }) => {
   return (
     <div className="flex items-center gap-2 text-lg">
       {checked ? (
-        <FiCheckCircle className="text-xl text-indigo-600" />
+        <FiCheckCircle className="text-xl text-[--poppy]" />
       ) : (
         <FiXSquare className="text-xl text-zinc-400" />
       )}
