@@ -17,7 +17,7 @@ const Features = () => {
         <BounceCard className="col-span-12 md:col-span-4">
           <CardTitle>AI-Powered Summaries</CardTitle>
           <div className="absolute bottom-0 left-4 right-4 top-32 translate-y-8 rounded-t-2xl p-4 bg-[--non-photo-blue]  transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg]">
-            <span className="block text-center font-semibold text-indigo-50">
+            <span className="block text-center font-semibold text-white">
               Get instant, comprehensive summaries of any document, highlighting
               key concepts and main ideas
             </span>
