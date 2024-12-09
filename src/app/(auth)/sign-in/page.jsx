@@ -45,7 +45,7 @@ const LoginPage = () => {
           credentials: "include",
         }
       );
-
+      //sdq
       const data = await response.json();
 
       if (!response.ok) {
@@ -87,7 +87,7 @@ const LoginPage = () => {
                 variants={primaryVariants}
                 className="mb-4 text-center text-4xl font-semibold"
               >
-                Sign In to Your Account
+                Sign In to Yours Account
               </motion.h1>
 
               <form onSubmit={handleSubmit} className="w-full">
