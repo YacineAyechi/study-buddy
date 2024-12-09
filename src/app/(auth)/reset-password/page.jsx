@@ -101,7 +101,7 @@ const ResetPasswordPage = () => {
                 variants={primaryVariants}
                 className="mb-6 text-center text-slate-600"
               >
-                Enter your email address and we'll send you instructions to
+                Enter your email address and we&apos;ll send you instructions to
                 reset your password.
               </motion.p>
 
