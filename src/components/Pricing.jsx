@@ -30,7 +30,7 @@ const Pricing = () => {
                 checked: true,
               },
               {
-                children: "10 Quiz Questions/Document",
+                children: "10 Quiz Questions Per Document",
                 checked: true,
               },
               {
@@ -41,10 +41,10 @@ const Pricing = () => {
                 children: "Community Support",
                 checked: true,
               },
-              {
-                children: "Advanced Analytics",
-                checked: false,
-              },
+              // {
+              //   children: "Advanced Analytics",
+              //   checked: false,
+              // },
             ]}
           />
           <PriceColumn
@@ -54,7 +54,7 @@ const Pricing = () => {
             highlight
             items={[
               {
-                children: "Unlimited Documents",
+                children: "100 Documents per month",
                 checked: true,
               },
               {
@@ -62,7 +62,7 @@ const Pricing = () => {
                 checked: true,
               },
               {
-                children: "Unlimited Quiz Questions",
+                children: "15 Quiz Questions Per Document",
                 checked: true,
               },
               {
@@ -73,10 +73,10 @@ const Pricing = () => {
                 children: "Priority Support",
                 checked: true,
               },
-              {
-                children: "Advanced Analytics",
-                checked: true,
-              },
+              // {
+              //   children: "Advanced Analytics",
+              //   checked: true,
+              // },
             ]}
           />
           {/* <PriceColumn
@@ -175,7 +175,7 @@ const PriceColumn = ({ highlight, title, price, statement, items }) => {
         ))}
       </div>
 
-      <Link href="/login">
+      <Link href="/sign-in">
         <button
           className={`w-full rounded-lg p-3 text-base uppercase text-white transition-colors ${
             highlight

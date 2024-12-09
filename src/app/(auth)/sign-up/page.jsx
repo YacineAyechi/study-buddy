@@ -1,9 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const primaryVariants = {
   initial: {
@@ -21,6 +22,67 @@ const primaryVariants = {
 };
 
 const RegisterPage = () => {
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const [error, setError] = useState("");
+  const router = useRouter();
+
+  const validateForm = () => {
+    if (formData.password.length < 6) {
+      setError("Password must be at least 6 characters long");
+      return false;
+    }
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
+      return false;
+    }
+    return true;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    if (!validateForm()) {
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            email: formData.email,
+            password: formData.password,
+          }),
+          credentials: "include",
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Registration failed");
+      }
+
+      document.cookie = `token=${data.token}; path=/`;
+      window.location.href = "/dashboard";
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
   return (
     <AnimatePresence mode="wait">
       <motion.section
@@ -41,7 +103,7 @@ const RegisterPage = () => {
             className="flex flex-col items-center justify-center"
           >
             <Link href="/" className="mb-8">
-              <Image src="/logo.svg" alt="Logo" width={100} height={100} />
+              <Image src="/logo.png" alt="Logo" width={220} height={220} />
             </Link>
 
             <div className="w-full">
@@ -52,7 +114,7 @@ const RegisterPage = () => {
                 Create your account
               </motion.h1>
 
-              <form onSubmit={(e) => e.preventDefault()} className="w-full">
+              <form onSubmit={handleSubmit} className="w-full">
                 <div className="flex gap-4">
                   <motion.div variants={primaryVariants} className="mb-2 w-1/2">
                     <label
@@ -67,6 +129,10 @@ const RegisterPage = () => {
                       placeholder="Enter your First Name"
                       className="w-full rounded border-[1px] border-slate-300 px-2.5 py-1.5 focus:outline-[--poppy]"
                       required
+                      value={formData.firstName}
+                      onChange={(e) =>
+                        setFormData({ ...formData, firstName: e.target.value })
+                      }
                     />
                   </motion.div>
 
@@ -83,6 +149,10 @@ const RegisterPage = () => {
                       placeholder="Enter your Last Name"
                       className="w-full rounded border-[1px] border-slate-300 px-2.5 py-1.5 focus:outline-[--poppy]"
                       required
+                      value={formData.lastName}
+                      onChange={(e) =>
+                        setFormData({ ...formData, lastName: e.target.value })
+                      }
                     />
                   </motion.div>
                 </div>
@@ -99,7 +169,10 @@ const RegisterPage = () => {
                     type="email"
                     placeholder="Enter your email"
                     className="w-full rounded border-[1px] border-slate-300 px-2.5 py-1.5 focus:outline-[--poppy]"
-                    required
+                    requiredvalue={formData.email}
+                    onChange={(e) =>
+                      setFormData({ ...formData, email: e.target.value })
+                    }
                   />
                 </motion.div>
 
@@ -116,6 +189,10 @@ const RegisterPage = () => {
                     placeholder="Enter your password"
                     className="w-full rounded border-[1px] border-slate-300 px-2.5 py-1.5 focus:outline-[--poppy]"
                     required
+                    value={formData.password}
+                    onChange={(e) =>
+                      setFormData({ ...formData, password: e.target.value })
+                    }
                   />
                 </motion.div>
 
@@ -132,6 +209,13 @@ const RegisterPage = () => {
                     placeholder="Re-type your password"
                     className="w-full rounded border-[1px] border-slate-300 px-2.5 py-1.5 focus:outline-[--poppy]"
                     required
+                    value={formData.confirmPassword}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        confirmPassword: e.target.value,
+                      })
+                    }
                   />
                 </motion.div>
 
@@ -150,6 +234,12 @@ const RegisterPage = () => {
                     policy.
                   </label>
                 </motion.div>
+
+                {error && (
+                  <div className="text-center text-sm text-red-600">
+                    {error}
+                  </div>
+                )}
 
                 <motion.button
                   variants={primaryVariants}

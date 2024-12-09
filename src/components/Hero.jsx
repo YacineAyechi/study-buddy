@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { FiBell, FiChevronDown, FiUser } from "react-icons/fi";
 
@@ -28,7 +29,7 @@ const Copy = () => {
         and more effectively.
       </p>
       <Link
-        href="/login"
+        href="sign-up"
         className="rounded-lg bg-[--poppy] p-3 uppercase text-white transition-colors hover:bg-[--poppy-dark] md:mb-[52px]"
       >
         <span className="font-bold">Start Learning - </span> it&apos;s free
@@ -47,13 +48,14 @@ const MockupScreen = () => {
           <span className="size-2 rounded-full bg-green-400" />
         </div>
         <span className="rounded bg-zinc-600 px-2 py-0.5 text-xs text-zinc-100">
-          your-website.com
+          learnengine.pro
         </span>
         <FiChevronDown className="text-white" />
       </div>
       <div className="relative z-0 grid h-full w-full grid-cols-[100px,_1fr] overflow-hidden rounded-t-lg bg-white md:grid-cols-[150px,_1fr]">
         <div className="h-full p-2">
-          <Logo />
+          {/* <Logo /> */}
+          <Image src="/logo.png" alt="Logo" width={100} height={100} />
         </div>
 
         <div className="relative z-0 p-2">

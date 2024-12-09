@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import React from "react";
+import { FiX } from "react-icons/fi";
 
 const links = [
   { name: "Home", href: "#home" },
@@ -84,7 +85,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center">
           <Link href="#home">
-            <Image src="/logo.svg" alt="Logo" width={100} height={100} />
+            <Image src="/logo.png" alt="Logo" width={220} height={220} />
           </Link>
 
           <button
@@ -126,16 +127,15 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* Desktop Auth Buttons */}
           <div className="hidden md:flex gap-4">
             <Link
-              href="/login"
+              href="/sign-in"
               className="text-[--poppy] border-[--poppy] border px-4 py-2 rounded-md transition-all hover:bg-[--poppy-dark] hover:text-white hover:border-[--poppy-dark]"
             >
               Sign In
             </Link>
             <Link
-              href="/login"
+              href="/sign-up"
               className="bg-[--poppy] border-[--poppy] border text-white px-4 py-2 rounded-md transition-all hover:bg-[--poppy-dark] hover:border-[--poppy-dark]"
             >
               Sign Up
@@ -143,7 +143,6 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Mobile Menu Overlay */}
         <div
           className={`fixed inset-0 bg-black/50 transition-opacity duration-300 md:hidden ${
             isMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
@@ -151,13 +150,22 @@ const Navbar = () => {
           onClick={() => setIsMenuOpen(false)}
         />
 
-        {/* Mobile Navigation */}
         <div
           className={`fixed top-0 right-0 h-full w-[250px] bg-white shadow-lg transition-transform duration-300 ease-in-out transform md:hidden ${
             isMenuOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >
-          <div className="pt-20 pb-3 px-4 space-y-3">
+          <div className="flex justify-between items-center px-4 pt-4">
+            <Link href="/" className="">
+              <Image src="/logo.png" alt="Logo" width={220} height={220} />
+            </Link>
+
+            <button onClick={() => setIsMenuOpen(false)}>
+              <FiX className="text-2xl" />
+            </button>
+          </div>
+
+          <div className="pt-4 pb-3 px-4 space-y-3">
             {links.map((link) => (
               <Link
                 href={link.href}
@@ -174,13 +182,13 @@ const Navbar = () => {
             ))}
             <div className="flex flex-col gap-2 pt-2">
               <Link
-                href="/login"
+                href="/sign-in"
                 className="text-center text-[--poppy] border-[--poppy] border px-4 py-2 rounded-md transition-all hover:bg-[--poppy-dark] hover:text-white hover:border-[--poppy-dark]"
               >
                 Sign In
               </Link>
               <Link
-                href="/login"
+                href="/sign-up"
                 className="text-center bg-[--poppy] border-[--poppy] border text-white px-4 py-2 rounded-md transition-all hover:bg-[--poppy-dark] hover:border-[--poppy-dark]"
               >
                 Sign Up

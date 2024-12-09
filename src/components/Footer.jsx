@@ -91,7 +91,7 @@ export const Footer = () => {
 const LogoColumn = () => {
   return (
     <div className="col-span-6 md:col-span-4">
-      <Image src="/logo.svg" alt="Logo" width={100} height={100} />
+      <Image src="/logo.png" alt="Logo" width={220} height={220} />
       <span className="mt-3 inline-block text-xs text-zinc-400">
         © LearnEngine - All rights reserved.
       </span>

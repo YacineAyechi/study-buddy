@@ -44,11 +44,11 @@ const Features = () => {
           </div>
         </BounceCard>
         <BounceCard className="col-span-12 md:col-span-4">
-          <CardTitle>Progress Tracking</CardTitle>
+          <CardTitle>Daily Study Quotes</CardTitle>
           <div className="absolute bottom-0 left-4 right-4 top-32 translate-y-8 rounded-t-2xl p-4 bg-[--non-photo-blue] transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg]">
             <span className="block text-center font-semibold text-white">
-              Monitor your learning journey with detailed analytics and
-              performance insights
+              Get inspired with two fresh educational quotes every day,
+              carefully selected to motivate your learning journey
             </span>
           </div>
         </BounceCard>

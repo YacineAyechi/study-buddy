@@ -1,9 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const primaryVariants = {
   initial: {
@@ -21,6 +22,43 @@ const primaryVariants = {
 };
 
 const LoginPage = () => {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [error, setError] = useState("");
+  const router = useRouter();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+          credentials: "include",
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Login failed");
+      }
+
+      document.cookie = `token=${data.token}; path=/`;
+      window.location.href = "/dashboard";
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
   return (
     <AnimatePresence mode="wait">
       <motion.section
@@ -41,7 +79,7 @@ const LoginPage = () => {
             className="flex flex-col items-center justify-center"
           >
             <Link href="/" className="mb-8">
-              <Image src="/logo.svg" alt="Logo" width={100} height={100} />
+              <Image src="/logo.png" alt="Logo" width={220} height={220} />
             </Link>
 
             <div className="w-full">
@@ -52,7 +90,7 @@ const LoginPage = () => {
                 Sign In to Your Account
               </motion.h1>
 
-              <form onSubmit={(e) => e.preventDefault()} className="w-full">
+              <form onSubmit={handleSubmit} className="w-full">
                 <motion.div variants={primaryVariants} className="mb-2 w-full">
                   <label
                     htmlFor="email-input"
@@ -66,6 +104,10 @@ const LoginPage = () => {
                     placeholder="Enter your email"
                     className="w-full rounded border-[1px] border-slate-300 px-2.5 py-1.5 focus:outline-[--poppy]"
                     required
+                    value={formData.email}
+                    onChange={(e) =>
+                      setFormData({ ...formData, email: e.target.value })
+                    }
                   />
                 </motion.div>
 
@@ -82,6 +124,10 @@ const LoginPage = () => {
                     placeholder="Enter your password"
                     className="w-full rounded border-[1px] border-slate-300 px-2.5 py-1.5 focus:outline-[--poppy]"
                     required
+                    value={formData.password}
+                    onChange={(e) =>
+                      setFormData({ ...formData, password: e.target.value })
+                    }
                   />
                 </motion.div>
 
@@ -94,6 +140,12 @@ const LoginPage = () => {
                     Reset Password
                   </Link>
                 </motion.p>
+
+                {error && (
+                  <div className="text-center text-sm text-red-600">
+                    {error}
+                  </div>
+                )}
 
                 <motion.button
                   variants={primaryVariants}

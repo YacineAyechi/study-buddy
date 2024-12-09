@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
@@ -20,25 +21,40 @@ const primaryVariants = {
   },
 };
 
-const ResetPasswordPage = () => {
-  const [email, setEmail] = useState("");
+const ResetPasswordConfirmPage = () => {
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [status, setStatus] = useState({ type: "", message: "" });
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     setStatus({ type: "", message: "" });
 
+    if (newPassword !== confirmPassword) {
+      setStatus({
+        type: "error",
+        message: "Passwords do not match",
+      });
+      setIsLoading(false);
+      return;
+    }
+
     try {
+      const token = window.location.pathname.split("/").pop();
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/auth/forgot-password`,
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/reset-password`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ email }),
+          body: JSON.stringify({
+            token,
+            newPassword,
+          }),
         }
       );
 
@@ -47,13 +63,13 @@ const ResetPasswordPage = () => {
       if (response.ok) {
         setStatus({
           type: "success",
-          message: "Password reset instructions have been sent to your email",
+          message: "Password reset successfully. Redirecting to login...",
         });
-        setEmail("");
+        setTimeout(() => router.push("/sign-in"), 2000);
       } else {
         setStatus({
           type: "error",
-          message: data.error || "Failed to send reset password email",
+          message: data.error || "Failed to reset password",
         });
       }
     } catch (error) {
@@ -101,26 +117,46 @@ const ResetPasswordPage = () => {
                 variants={primaryVariants}
                 className="mb-6 text-center text-slate-600"
               >
-                Enter your email address and we'll send you instructions to
-                reset your password.
+                Please enter your new password
               </motion.p>
 
               <form onSubmit={handleSubmit} className="w-full">
                 <motion.div variants={primaryVariants} className="mb-4 w-full">
                   <label
-                    htmlFor="email-input"
+                    htmlFor="new-password"
                     className="mb-1 inline-block text-sm font-medium"
                   >
-                    Email<span className="text-red-600">*</span>
+                    New Password<span className="text-red-600">*</span>
                   </label>
                   <input
-                    id="email-input"
-                    type="email"
-                    placeholder="Enter your email"
+                    id="new-password"
+                    name="new-password"
+                    type="password"
+                    placeholder="Enter your New Password"
                     className="w-full rounded border-[1px] border-slate-300 px-2.5 py-1.5 focus:outline-[--poppy]"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
                     required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </motion.div>
+
+                <motion.div variants={primaryVariants} className="mb-4 w-full">
+                  <label
+                    htmlFor="confirm-password"
+                    className="mb-1 inline-block text-sm font-medium"
+                  >
+                    Confirm New Password<span className="text-red-600">*</span>
+                  </label>
+
+                  <input
+                    id="confirm-password"
+                    name="confirm-password"
+                    type="password"
+                    placeholder="Confirm your New Password"
+                    className="w-full rounded border-[1px] border-slate-300 px-2.5 py-1.5 focus:outline-[--poppy]"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    required
                   />
                 </motion.div>
 
@@ -146,14 +182,14 @@ const ResetPasswordPage = () => {
                   disabled={isLoading}
                   className="mb-4 w-full rounded bg-[--poppy] px-4 py-2 text-center font-medium text-white transition-colors hover:bg-[--poppy-dark] disabled:opacity-70"
                 >
-                  {isLoading ? "Sending..." : "Reset Password"}
+                  {isLoading ? "Resetting Password..." : "Reset Password"}
                 </motion.button>
 
                 <motion.p
                   variants={primaryVariants}
                   className="text-center text-sm"
                 >
-                  Remember your password?{" "}
+                  Back to Sign In?{" "}
                   <Link
                     href="/sign-in"
                     className="text-[--poppy] hover:underline"
@@ -170,4 +206,4 @@ const ResetPasswordPage = () => {
   );
 };
 
-export default ResetPasswordPage;
+export default ResetPasswordConfirmPage;
