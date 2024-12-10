@@ -52,7 +52,11 @@ const DashboardContent = () => {
         );
 
         const data = await response.json();
-        setStudyTime(`${data.hours}.${data.minutes} hrs`);
+        const displayTime =
+          data.hours >= 1
+            ? `${data.hours}.${data.minutes} hrs`
+            : `${data.minutes} mins`;
+        setStudyTime(displayTime);
       } catch (error) {
         console.error("Error fetching study time:", error);
       }
@@ -198,11 +202,11 @@ const DashboardContent = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-4 mb-8">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3 mb-8">
         <StatCard
           icon={<FiBook />}
           title="Study Sessions"
-          value={user?.loginCount?.toString() || "8"}
+          value={user?.loginCount?.toString()}
           subtitle="Total logins"
         />
         <StatCard
@@ -216,12 +220,6 @@ const DashboardContent = () => {
           title="Document Credits"
           value={`${user?.tokens || 0}/${user?.plan === "free" ? "2" : "100"}`}
           subtitle={`${user?.plan === "free" ? "Daily" : "Monthly"} limit`}
-        />
-        <StatCard
-          icon={<FiMessageSquare />}
-          title="AI Interactions"
-          value="45"
-          subtitle="This month"
         />
       </div>
 

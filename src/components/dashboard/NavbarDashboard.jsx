@@ -22,6 +22,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import ProtectedRoute from "../ProtectedRoute";
 import { getInitials, getAvatarColor } from "@/utils/avatarUtils";
 import { BsStars } from "react-icons/bs";
+import { GrUserAdmin } from "react-icons/gr";
 
 const wrapperVariants = {
   open: {
@@ -171,6 +172,16 @@ const NavbarDashboard = () => {
               open={open}
               link="support"
             />
+
+            {user?.role === "admin" && (
+              <Option
+                Icon={GrUserAdmin}
+                title="Admin Support"
+                selected={currentPath === "admin/support"}
+                open={open}
+                link="admin/support"
+              />
+            )}
           </div>
         </div>
 

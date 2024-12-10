@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import React from "react";
 import { FiX } from "react-icons/fi";
+import { useAuth } from "@/contexts/AuthContext";
 
 const links = [
   { name: "Home", href: "#home" },
@@ -15,6 +16,7 @@ const links = [
 ];
 
 const Navbar = () => {
+  const { user, loading } = useAuth();
   const [activeSection, setActiveSection] = useState("");
   const [scrolled, setScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -128,18 +130,30 @@ const Navbar = () => {
           </div>
 
           <div className="hidden md:flex gap-4">
-            <Link
-              href="/sign-in"
-              className="text-[--poppy] border-[--poppy] border px-4 py-2 rounded-md transition-all hover:bg-[--poppy-dark] hover:text-white hover:border-[--poppy-dark]"
-            >
-              Sign In
-            </Link>
-            <Link
-              href="/sign-up"
-              className="bg-[--poppy] border-[--poppy] border text-white px-4 py-2 rounded-md transition-all hover:bg-[--poppy-dark] hover:border-[--poppy-dark]"
-            >
-              Sign Up
-            </Link>
+            {!loading &&
+              (user ? (
+                <Link
+                  href="/dashboard"
+                  className="bg-[--poppy] border-[--poppy] border text-white px-4 py-2 rounded-md transition-all hover:bg-[--poppy-dark] hover:border-[--poppy-dark]"
+                >
+                  Access Dashboard
+                </Link>
+              ) : (
+                <>
+                  <Link
+                    href="/sign-in"
+                    className="text-[--poppy] border-[--poppy] border px-4 py-2 rounded-md transition-all hover:bg-[--poppy-dark] hover:text-white hover:border-[--poppy-dark]"
+                  >
+                    Sign In
+                  </Link>
+                  <Link
+                    href="/sign-up"
+                    className="bg-[--poppy] border-[--poppy] border text-white px-4 py-2 rounded-md transition-all hover:bg-[--poppy-dark] hover:border-[--poppy-dark]"
+                  >
+                    Sign Up
+                  </Link>
+                </>
+              ))}
           </div>
         </div>
 
@@ -180,20 +194,36 @@ const Navbar = () => {
                 {link.name}
               </Link>
             ))}
-            <div className="flex flex-col gap-2 pt-2">
-              <Link
-                href="/sign-in"
-                className="text-center text-[--poppy] border-[--poppy] border px-4 py-2 rounded-md transition-all hover:bg-[--poppy-dark] hover:text-white hover:border-[--poppy-dark]"
-              >
-                Sign In
-              </Link>
-              <Link
-                href="/sign-up"
-                className="text-center bg-[--poppy] border-[--poppy] border text-white px-4 py-2 rounded-md transition-all hover:bg-[--poppy-dark] hover:border-[--poppy-dark]"
-              >
-                Sign Up
-              </Link>
-            </div>
+            {!loading && (
+              <div className="flex flex-col gap-2 pt-2">
+                {user ? (
+                  <Link
+                    href="/dashboard"
+                    className="text-center bg-[--poppy] border-[--poppy] border text-white px-4 py-2 rounded-md transition-all hover:bg-[--poppy-dark] hover:border-[--poppy-dark]"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Access Dashboard
+                  </Link>
+                ) : (
+                  <>
+                    <Link
+                      href="/sign-in"
+                      className="text-center text-[--poppy] border-[--poppy] border px-4 py-2 rounded-md transition-all hover:bg-[--poppy-dark] hover:text-white hover:border-[--poppy-dark]"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Sign In
+                    </Link>
+                    <Link
+                      href="/sign-up"
+                      className="text-center bg-[--poppy] border-[--poppy] border text-white px-4 py-2 rounded-md transition-all hover:bg-[--poppy-dark] hover:border-[--poppy-dark]"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Sign Up
+                    </Link>
+                  </>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>
