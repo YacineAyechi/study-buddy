@@ -33,15 +33,15 @@ export const Footer = () => {
           links={[
             {
               title: "Terms & Conditions",
-              href: "/#",
+              href: "/terms",
             },
             {
               title: "Privacy Policy",
-              href: "/#",
+              href: "/privacy",
             },
             {
               title: "Refund Policy",
-              href: "/#",
+              href: "/refund",
             },
           ]}
         />
@@ -66,23 +66,6 @@ export const Footer = () => {
             },
           ]}
         />
-
-        <div className="col-span-6 space-y-2 text-sm md:col-span-2">
-          <span className="block text-black font-bold">Newsletter</span>
-          <form className="flex gap-1">
-            <input
-              type="text"
-              placeholder="mail@example.com"
-              className="w-full rounded-lg px-3 py-2 border-2 border-[--poppy] placeholder:text-[12px] focus:outline-none"
-            />
-            <button
-              type="submit"
-              className="w-10 rounded-lg bg-[--poppy] px-3 py-2 text-white"
-            >
-              <IoIosLogOut className="text-xl font-bold" />
-            </button>
-          </form>
-        </div>
       </div>
     </footer>
   );

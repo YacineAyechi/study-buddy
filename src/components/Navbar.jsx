@@ -32,28 +32,14 @@ const Navbar = () => {
       const sections = links.map((link) => link.href.substring(1));
       let currentSection = "";
 
-      const sectionPositions = sections
-        .map((section) => {
-          const element = document.getElementById(section);
-          if (element) {
-            const rect = element.getBoundingClientRect();
-            return {
-              id: section,
-              top: rect.top,
-              bottom: rect.bottom,
-            };
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top <= 150 && rect.bottom >= 150) {
+            currentSection = section;
+            break;
           }
-          return null;
-        })
-        .filter(Boolean);
-
-      const viewportHeight = window.innerHeight;
-      const viewportMiddle = viewportHeight / 2;
-
-      for (const section of sectionPositions) {
-        if (section.top <= viewportMiddle && section.bottom >= 0) {
-          currentSection = section.id;
-          break;
         }
       }
 
@@ -72,7 +58,6 @@ const Navbar = () => {
     };
 
     window.addEventListener("scroll", scrollListener);
-
     handleScroll();
 
     return () => window.removeEventListener("scroll", scrollListener);

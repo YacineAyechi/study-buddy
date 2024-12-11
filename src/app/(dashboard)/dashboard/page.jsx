@@ -14,8 +14,6 @@ const Dashboard = () => {
       <div className="flex min-h-screen bg-indigo-50">
         <NavbarDashboard />
         <DashboardContent />
-        {/* <h1>Welcome, {user?.first_name}!</h1>*/}
-        {/* <button onClick={logout}>Logout</button> */}
       </div>
     </ProtectedRoute>
   );
