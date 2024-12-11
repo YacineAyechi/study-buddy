@@ -189,20 +189,20 @@ const DashboardContent = () => {
   }, [user?._id]);
 
   return (
-    <div className="flex-1 p-8 pb-0">
-      <div className="mb-8 flex items-center gap-2">
-        <FiUser className="text-2xl text-[--poppy]" />
+    <div className="flex-1 p-4 md:p-8 pb-0">
+      <div className="mb-4 md:mb-8 flex items-center gap-2">
+        <FiUser className="text-xl md:text-2xl text-[--poppy]" />
         <div>
-          <h1 className="text-3xl font-bold text-slate-800">
+          <h1 className="text-2xl md:text-3xl font-bold text-slate-800">
             Welcome back, {user?.firstName}
           </h1>
-          <p className="text-slate-600">
+          <p className="text-sm md:text-base text-slate-600">
             Ready to continue your learning journey?
           </p>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 mb-4 md:mb-8">
         <StatCard
           icon={<FiBook />}
           title="Study Sessions"
@@ -223,32 +223,34 @@ const DashboardContent = () => {
         />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-        <div className="rounded-lg bg-white p-6 shadow-sm">
-          <h2 className="text-xl font-semibold mb-4">Study Tools</h2>
-          <div className="grid grid-cols-2 gap-4">
-            <Link href="/history" className="md:col-span-2">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-5">
+        <div className="rounded-lg bg-white p-4 md:p-6 shadow-sm">
+          <h2 className="text-lg md:text-xl font-semibold mb-4">Study Tools</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+            <Link href="/history" className="sm:col-span-2">
               <FeatureCard
                 title="Documents"
                 count={totalDocuments.toString()}
                 subtitle="Total uploaded documents"
-                icon={<FiBook className="text-2xl" />}
+                icon={<FiBook className="text-xl md:text-2xl" />}
               />
             </Link>
-            <Link href="/history" className="md:col-span-2">
+            <Link href="/history" className="sm:col-span-2">
               <FeatureCard
                 title="Quiz Performance"
                 count={`${averageQuizScore}%`}
                 subtitle="Average quiz score"
-                icon={<FiBook className="text-2xl" />}
+                icon={<FiBook className="text-xl md:text-2xl" />}
               />
             </Link>
           </div>
         </div>
 
-        <div className="rounded-lg bg-white p-6 shadow-sm">
-          <h2 className="text-xl font-semibold mb-4">Daily Study Quotes</h2>
-          <div className="space-y-4">
+        <div className="rounded-lg bg-white p-4 md:p-6 shadow-sm">
+          <h2 className="text-lg md:text-xl font-semibold mb-4">
+            Daily Study Quotes
+          </h2>
+          <div className="space-y-3 md:space-y-4">
             {dailyQuotes.map((quote, index) => (
               <InsightCard
                 key={index}
@@ -261,7 +263,7 @@ const DashboardContent = () => {
         </div>
       </div>
 
-      <div className="flex justify-center items-center text-sm text-[--poppy] font-semibold">
+      <div className="flex justify-center items-center text-xs md:text-sm text-[--poppy] font-semibold mb-4 md:mb-0">
         <p>© LearnEngine - All rights reserved.</p>
       </div>
     </div>
@@ -270,14 +272,14 @@ const DashboardContent = () => {
 
 const StatCard = ({ icon, title, value, subtitle }) => {
   return (
-    <div className="rounded-lg bg-white p-6 shadow-sm">
-      <div className="flex items-center gap-4">
-        <div className="rounded-full bg-[--poppy]/10 p-4 text-[--poppy] text-2xl">
+    <div className="rounded-lg bg-white p-4 md:p-6 shadow-sm">
+      <div className="flex items-center gap-3 md:gap-4">
+        <div className="rounded-full bg-[--poppy]/10 p-3 md:p-4 text-[--poppy] text-xl md:text-2xl">
           {icon}
         </div>
         <div>
           <p className="text-sm text-slate-600">{title}</p>
-          <p className="text-2xl font-bold">{value}</p>
+          <p className="text-xl md:text-2xl font-bold">{value}</p>
           <p className="text-xs text-slate-500">{subtitle}</p>
         </div>
       </div>
@@ -287,18 +289,18 @@ const StatCard = ({ icon, title, value, subtitle }) => {
 
 const FeatureCard = ({ title, count, subtitle, icon }) => {
   return (
-    <div className="rounded-lg border border-slate-200 p-4 hover:border-[--poppy] transition-colors cursor-pointer">
+    <div className="rounded-lg border border-slate-200 p-3 md:p-4 hover:border-[--poppy] transition-colors cursor-pointer">
       <div className="flex flex-row items-center justify-center">
-        <div className="flex flex-row items-center text-center gap-0 mb-2">
+        <div className="flex flex-row items-center text-center gap-2 mb-2">
           <div className="rounded-full bg-[--poppy]/10 p-2 text-[--poppy]">
             {icon}
           </div>
-          <span className="text-2xl font-bold">{count}</span>
+          <span className="text-xl md:text-2xl font-bold">{count}</span>
         </div>
       </div>
       <div className="text-center">
-        <h3 className="font-medium">{title}</h3>
-        <p className="text-sm text-slate-600">{subtitle}</p>
+        <h3 className="text-sm md:text-base font-medium">{title}</h3>
+        <p className="text-xs md:text-sm text-slate-600">{subtitle}</p>
       </div>
     </div>
   );
@@ -306,12 +308,9 @@ const FeatureCard = ({ title, count, subtitle, icon }) => {
 
 const InsightCard = ({ title, message, type }) => {
   return (
-    <div className="rounded-lg border border-slate-200 p-4">
-      <h3 className="font-medium mb-2">{title}</h3>
-      <p className="text-sm text-slate-600">{message}</p>
-      {/* <span className="mt-2 inline-block text-xs text-[--poppy] font-medium">
-        {type === "suggestion" ? "Suggested Action" : "Performance Analysis"}
-      </span> */}
+    <div className="rounded-lg border border-slate-200 p-3 md:p-4">
+      <h3 className="text-sm md:text-base font-medium mb-1 md:mb-2">{title}</h3>
+      <p className="text-xs md:text-sm text-slate-600">{message}</p>
     </div>
   );
 };
