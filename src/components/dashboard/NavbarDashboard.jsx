@@ -70,11 +70,24 @@ const actionIconVariants = {
 
 const NavbarDashboard = () => {
   const [open, setOpen] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const pathname = usePathname();
   const currentPath = pathname.split("/")[1];
   const [notificationCount, setNotificationCount] = useState(0);
   const { getAuthToken, user } = useAuth();
+
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      setOpen(!mobile);
+    };
+
+    handleResize(); // Initial check
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     const fetchNotificationCount = async () => {
@@ -119,104 +132,129 @@ const NavbarDashboard = () => {
     <ProtectedRoute>
       <motion.nav
         layout
-        className="sticky top-0 h-screen shrink-0 border-r border-slate-300 bg-white p-2"
+        className={`${
+          isMobile && open
+            ? "fixed inset-0 z-50 backdrop-blur-sm"
+            : "sticky top-0 h-screen shrink-0 border-r border-slate-300 bg-white"
+        } p-2`}
         style={{
-          width: open ? "225px" : "fit-content",
+          width: open ? (isMobile ? "100%" : "225px") : "fit-content",
         }}
       >
-        <TitleSection open={open} />
-
-        <div className="space-y-1">
-          <Option
-            Icon={FiHome}
-            title="Dashboard"
-            selected={currentPath === "dashboard"}
-            open={open}
-            link="dashboard"
+        {isMobile && open && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setOpen(false)}
+            className="absolute inset-0 bg-/20"
           />
-
-          <div className="mt-6">
-            <Option
-              Icon={FiUploadCloud}
-              title="Upload"
-              selected={currentPath === "upload"}
-              open={open}
-              link="upload"
-            />
-          </div>
-
-          <div className="my-6">
-            <Option
-              Icon={FiRotateCcw}
-              title="History"
-              selected={currentPath === "history"}
-              open={open}
-              link="history"
-            />
-          </div>
-
-          <Option
-            Icon={FiBell}
-            title="Notifications"
-            selected={currentPath === "notifications"}
-            open={open}
-            notifs={notificationCount}
-            onClick={() => setShowNotifications(true)}
-          />
-
-          <div className="my-6">
-            <Option
-              Icon={FiLifeBuoy}
-              title="Support"
-              selected={currentPath === "support"}
-              open={open}
-              link="support"
-            />
-
-            {user?.role === "admin" && (
-              <Option
-                Icon={GrUserAdmin}
-                title="Admin Support"
-                selected={currentPath === "admin/support"}
-                open={open}
-                link="admin/support"
-              />
-            )}
-          </div>
-        </div>
-
-        {user?.plan === "free" && (
-          <>
-            {open && (
-              <div className="absolute bottom-14 left-0 right-0 border-t border-slate-300 transition-colors">
-                <div className="bg-[--poppy] h-full p-4 m-4 rounded-lg text-white">
-                  <div>
-                    <span className="text- font-medium">Become Pro Access</span>
-                    <p className="text-xs mt-1">
-                      Try your experience for using more features
-                    </p>
-                  </div>
-                  <div className="flex items-center bg-white text-[--poppy] rounded-lg p-2 mt-4 w-full justify-center transition-colors hover:bg-slate-100">
-                    <BsStars className="text-xl" />
-                    <button className="w-full text-[14px] font-bold">
-                      Upgrade to Pro
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {!open && (
-              <div className="absolute bottom-14 left-0 right-0 mb-2 transition-colors">
-                <motion.div className="relative cursor-pointer p-2 flex justify-center mx-auto items-center rounded-md transition-colors bg-[--poppy] text-white h-full w-10 place-content-center text-lg">
-                  <BsStars className="text-xl" />
-                </motion.div>
-              </div>
-            )}
-          </>
         )}
 
-        <ToggleClose open={open} setOpen={setOpen} />
+        <div
+          className={`${
+            isMobile && open
+              ? "absolute left-0 top-0 h-screen p-2 w-[225px] bg-white shadow-lg"
+              : "h-full w-full"
+          }`}
+        >
+          <TitleSection open={open} />
+
+          <div className="space-y-1">
+            <Option
+              Icon={FiHome}
+              title="Dashboard"
+              selected={currentPath === "dashboard"}
+              open={open}
+              link="dashboard"
+            />
+
+            <div className="mt-6">
+              <Option
+                Icon={FiUploadCloud}
+                title="Upload"
+                selected={currentPath === "upload"}
+                open={open}
+                link="upload"
+              />
+            </div>
+
+            <div className="my-6">
+              <Option
+                Icon={FiRotateCcw}
+                title="History"
+                selected={currentPath === "history"}
+                open={open}
+                link="history"
+              />
+            </div>
+
+            <Option
+              Icon={FiBell}
+              title="Notifications"
+              selected={currentPath === "notifications"}
+              open={open}
+              notifs={notificationCount}
+              onClick={() => setShowNotifications(true)}
+            />
+
+            <div className="my-6">
+              <Option
+                Icon={FiLifeBuoy}
+                title="Support"
+                selected={currentPath === "support"}
+                open={open}
+                link="support"
+              />
+
+              {user?.role === "admin" && (
+                <Option
+                  Icon={GrUserAdmin}
+                  title="Admin Support"
+                  selected={currentPath === "admin/support"}
+                  open={open}
+                  link="admin/support"
+                />
+              )}
+            </div>
+          </div>
+
+          {user?.plan === "free" && (
+            <>
+              {open && (
+                <div className="absolute bottom-14 left-0 right-0 border-t border-slate-300 transition-colors">
+                  <div className="bg-[--poppy] h-full p-4 m-4 rounded-lg text-white">
+                    <div>
+                      <span className="text- font-medium">
+                        Become Pro Access
+                      </span>
+                      <p className="text-xs mt-1">
+                        Try your experience for using more features
+                      </p>
+                    </div>
+                    <div className="flex items-center bg-white text-[--poppy] rounded-lg p-2 mt-4 w-full justify-center transition-colors hover:bg-slate-100">
+                      <BsStars className="text-xl" />
+                      <button className="w-full text-[14px] font-bold">
+                        Upgrade to Pro
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {!open && (
+                // <div className="absolute bottom-14 left-0 right-0 mb-2 transition-colors">
+                //   <motion.div className="relative cursor-pointer p-2 flex justify-center mx-auto items-center rounded-md transition-colors bg-[--poppy] text-white h-full w-10 place-content-center text-lg">
+                //     <BsStars className="text-xl" />
+                //   </motion.div>
+                // </div>
+                <></>
+              )}
+            </>
+          )}
+
+          <ToggleClose open={open} setOpen={setOpen} />
+        </div>
       </motion.nav>
 
       <AnimatePresence>
