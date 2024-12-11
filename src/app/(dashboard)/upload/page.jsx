@@ -172,10 +172,10 @@ const Upload = () => {
   return (
     <div className="flex min-h-screen bg-indigo-50">
       <NavbarDashboard />
-      <div className="flex-1 p-8">
-        <div className="mx-auto maxxl">
-          <div className="mb-8 flex items-center justify-between">
-            <h1 className="text-3xl font-bold text-slate-800">
+      <div className="flex-1 p-4 md:p-8">
+        <div className="mx-auto max-w-4xl">
+          <div className="mb-4 md:mb-8 flex flex-col md:flex-row md:items-center md:justify-between">
+            <h1 className="text-2xl md:text-3xl font-bold text-slate-800 mb-4 md:mb-0">
               Upload Document
             </h1>
             <div className="flex items-center gap-2">
@@ -183,17 +183,17 @@ const Upload = () => {
             </div>
           </div>
 
-          <div className="rounded-lg bg-white p-8 shadow-sm">
+          <div className="rounded-lg bg-white p-4 md:p-8 shadow-sm">
             {tokensRemaining !== null && (
               <TokenDisplay tokens={tokensRemaining} plan={user?.plan} />
             )}
             {renderStep()}
 
             {currentStep < 4 && file && !isProcessing && (
-              <div className="mt-6 flex justify-end">
+              <div className="mt-6 flex justify-center md:justify-end">
                 <button
                   onClick={handleNextStep}
-                  className="flex items-center gap-2 rounded bg-[--poppy] px-4 py-2 text-white hover:bg-[--poppy-dark]"
+                  className="w-full md:w-auto flex items-center justify-center gap-2 rounded bg-[--poppy] px-4 py-2 text-white hover:bg-[--poppy-dark]"
                 >
                   {currentStep === 1 ? "Process Document" : "Next"}
                   <FiChevronRight />
@@ -268,11 +268,11 @@ const SummaryStep = ({ summary }) => {
   return (
     <div>
       <div className="mb-4 flex items-center gap-2">
-        <FiBook className="text-2xl text-[--poppy]" />
-        <h2 className="text-xl font-semibold">Document Summary</h2>
+        <FiBook className="text-xl md:text-2xl text-[--poppy]" />
+        <h2 className="text-lg md:text-xl font-semibold">Document Summary</h2>
       </div>
-      <div className="rounded-lg border border-slate-200 p-4">
-        <p className="text-slate-600">{summary}</p>
+      <div className="rounded-lg border border-slate-200 p-3 md:p-4">
+        <p className="text-sm md:text-base text-slate-600">{summary}</p>
       </div>
     </div>
   );
@@ -283,11 +283,11 @@ const QuizStep = ({ quiz, documentId }) => {
     <div>
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <FiList className="text-2xl text-[--poppy]" />
-          <h2 className="text-xl font-semibold">Generated Quiz</h2>
+          <FiList className="text-xl md:text-2xl text-[--poppy]" />
+          <h2 className="text-lg md:text-xl font-semibold">Generated Quiz</h2>
         </div>
       </div>
-      <div className="rounded-lg bg-slate-50 p-6">
+      <div className="rounded-lg bg-slate-50 p-4 md:p-6">
         <QuizView questions={quiz} documentId={documentId} />
       </div>
     </div>
@@ -297,19 +297,19 @@ const QuizStep = ({ quiz, documentId }) => {
 const FlashcardsStep = ({ flashcards, onSave }) => {
   return (
     <div>
-      <div className="mb-4 flex items-center justify-between">
+      <div className="mb-4 flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-0">
         <div className="flex items-center gap-2">
-          <FiCreditCard className="text-2xl text-[--poppy]" />
-          <h2 className="text-xl font-semibold">Flashcards</h2>
+          <FiCreditCard className="text-xl md:text-2xl text-[--poppy]" />
+          <h2 className="text-lg md:text-xl font-semibold">Flashcards</h2>
         </div>
         <button
           onClick={onSave}
-          className="flex items-center gap-2 rounded bg-[--poppy] px-4 py-2 text-white hover:bg-[--poppy-dark]"
+          className="w-full md:w-auto flex items-center justify-center gap-2 rounded bg-[--poppy] px-4 py-2 text-white hover:bg-[--poppy-dark]"
         >
           <FiEye className="h-4 w-4" /> View Full Document
         </button>
       </div>
-      <div className="rounded-lg bg-slate-50 p-6">
+      <div className="rounded-lg bg-slate-50 p-4 md:p-6">
         <FlashCardView flashcards={flashcards} />
       </div>
     </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
 const FlashCardView = ({ flashcards }) => {
   const [currentCard, setCurrentCard] = useState(0);
@@ -24,22 +25,28 @@ const FlashCardView = ({ flashcards }) => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto">
-      {showProgress && (
-        <div className="mb-4 flex items-center justify-between">
-          <p className="text-sm text-slate-600">
-            Card {currentCard + 1} of {flashcards.length}
-          </p>
-          <div className="h-2 flex-1 mx-4 rounded-full bg-slate-200">
-            <div
-              className="h-full rounded-full bg-[--poppy] transition-all duration-300"
-              style={{
-                width: `${((currentCard + 1) / flashcards.length) * 100}%`,
-              }}
-            />
-          </div>
+    <div className="space-y-6">
+      <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="text-sm md:text-base text-slate-600">
+          Card {currentCard + 1} of {flashcards.length}
         </div>
-      )}
+        <div className="flex items-center gap-2">
+          <button
+            onClick={handlePrevious}
+            disabled={currentCard === 0}
+            className="rounded-lg border border-slate-200 p-2 text-slate-600 transition-colors hover:bg-slate-50 disabled:opacity-50"
+          >
+            <FiChevronLeft className="h-5 w-5" />
+          </button>
+          <button
+            onClick={handleNext}
+            disabled={currentCard === flashcards.length - 1}
+            className="rounded-lg border border-slate-200 p-2 text-slate-600 transition-colors hover:bg-slate-50 disabled:opacity-50"
+          >
+            <FiChevronRight className="h-5 w-5" />
+          </button>
+        </div>
+      </div>
 
       <div className="mx-auto max-w-md">
         <div
@@ -51,44 +58,29 @@ const FlashCardView = ({ flashcards }) => {
               isFlipped ? "rotate-y-180" : ""
             }`}
           >
-            <div className="flex items-center justify-center mx-auto min-h-[300px] rounded-xl bg-white p-8 shadow-lg backface-hidden">
+            <div className="flex items-center justify-center mx-auto min-h-[200px] md:min-h-[300px] rounded-xl bg-white p-4 md:p-8 shadow-lg backface-hidden">
               <div className="flex h-full flex-col items-center justify-center text-center">
-                <p className="text-xl font-medium text-slate-800">
+                <p className="text-base md:text-xl font-medium text-slate-800">
                   {flashcards[currentCard].front}
                 </p>
-                <p className="mt-4 text-sm text-slate-500">Click to flip</p>
+                <p className="mt-4 text-xs md:text-sm text-slate-500">
+                  Click to flip
+                </p>
               </div>
             </div>
 
-            <div className="absolute inset-0 min-h-[300px] rounded-xl bg-white p-8 shadow-lg backface-hidden rotate-y-180">
+            <div className="absolute inset-0 min-h-[200px] md:min-h-[300px] rounded-xl bg-white p-4 md:p-8 shadow-lg backface-hidden rotate-y-180">
               <div className="flex h-full flex-col items-center justify-center text-center">
-                <p className="text-xl font-medium text-slate-800">
+                <p className="text-base md:text-xl font-medium text-slate-800">
                   {flashcards[currentCard].back}
                 </p>
-                <p className="mt-4 text-sm text-slate-500">
+                <p className="mt-4 text-xs md:text-sm text-slate-500">
                   Click to flip back
                 </p>
               </div>
             </div>
           </div>
         </div>
-      </div>
-
-      <div className="mt-6 flex justify-center gap-4">
-        <button
-          onClick={handlePrevious}
-          disabled={currentCard === 0}
-          className="flex items-center gap-2 rounded-md bg-white px-4 py-2 text-slate-700 shadow-sm transition-colors hover:bg-slate-50 disabled:opacity-50"
-        >
-          Previous
-        </button>
-        <button
-          onClick={handleNext}
-          disabled={currentCard === flashcards.length - 1}
-          className="flex items-center gap-2 rounded-md bg-white px-4 py-2 text-slate-700 shadow-sm transition-colors hover:bg-slate-50 disabled:opacity-50"
-        >
-          Next
-        </button>
       </div>
     </div>
   );

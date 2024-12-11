@@ -73,60 +73,75 @@ const QuizView = ({ questions, documentId }) => {
 
   return (
     <div className="space-y-6">
-      {questions.map((q, i) => (
+      {questions.map((question, index) => (
         <div
-          key={i}
-          className="rounded-lg border border-slate-200 p-6 bg-white shadow-sm"
+          key={index}
+          className="rounded-lg border border-slate-200 p-4 md:p-6"
         >
-          <p className="mb-4 text-lg font-medium text-slate-800">
-            {i + 1}. {q.question}
-          </p>
+          <div className="mb-4">
+            <h3 className="text-base md:text-lg font-medium text-slate-800">
+              {index + 1}. {question.question}
+            </h3>
+          </div>
+
           <div className="space-y-3">
-            {q.options.map((option, j) => (
-              <div key={j} className="flex items-center gap-3">
+            {question.options.map((option, optionIndex) => (
+              <label
+                key={optionIndex}
+                className={`flex cursor-pointer items-center rounded-lg border p-3 md:p-4 transition-colors ${
+                  showResults
+                    ? userAnswers[index] === optionIndex
+                      ? userAnswers[index] === question.correctAnswer
+                        ? "border-green-500 bg-green-50"
+                        : "border-red-500 bg-red-50"
+                      : question.correctAnswer === optionIndex
+                      ? "border-green-500 bg-green-50"
+                      : "border-slate-200"
+                    : userAnswers[index] === optionIndex
+                    ? "border-[--poppy] bg-[--poppy]/5"
+                    : "border-slate-200 hover:border-slate-300"
+                }`}
+              >
                 <input
                   type="radio"
-                  name={`question-${i}`}
-                  id={`q${i}-${j}`}
-                  checked={userAnswers[i] === j}
-                  onChange={() => handleAnswerSelect(i, j)}
+                  name={`question-${index}`}
+                  value={optionIndex}
+                  checked={userAnswers[index] === optionIndex}
+                  onChange={() => handleAnswerSelect(index, optionIndex)}
                   disabled={showResults}
-                  className="h-4 w-4 text-[--poppy] focus:ring-[--poppy]"
+                  className="sr-only"
                 />
-                <label
-                  htmlFor={`q${i}-${j}`}
-                  className={`${
-                    showResults
-                      ? j === q.correctAnswer
-                        ? "text-green-600 font-medium"
-                        : userAnswers[i] === j
-                        ? "text-red-600"
-                        : "text-slate-700"
-                      : "text-slate-700"
-                  }`}
-                >
+                <span className="text-sm md:text-base text-slate-700">
                   {option}
-                </label>
-              </div>
+                </span>
+              </label>
             ))}
           </div>
-          {showResults && userAnswers[i] !== q.correctAnswer && (
-            <p className="mt-2 text-sm text-red-600">
-              Correct answer: {q.options[q.correctAnswer]}
-            </p>
+
+          {showResults && (
+            <div className="mt-4 text-xs md:text-sm">
+              {userAnswers[index] === question.correctAnswer ? (
+                <p className="text-green-600">Correct!</p>
+              ) : (
+                <p className="text-red-600">
+                  Incorrect. The correct answer was:{" "}
+                  {question.options[question.correctAnswer]}
+                </p>
+              )}
+            </div>
           )}
         </div>
       ))}
 
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col md:flex-row justify-between items-center gap-4">
         {showResults ? (
           <>
-            <div className="text-lg font-medium">
+            <div className="text-base md:text-lg font-medium order-2 md:order-1">
               Your score: {score.correct}/{score.total} ({score.percentage}%)
             </div>
             <button
               onClick={handleRetry}
-              className="rounded-md bg-[--poppy] px-6 py-2 text-white hover:bg-[--poppy-dark] transition-colors"
+              className="w-full md:w-auto order-1 md:order-2 rounded-md bg-[--poppy] px-4 py-2 text-sm md:text-base text-white hover:bg-[--poppy-dark] transition-colors"
             >
               Try Again
             </button>
@@ -135,7 +150,7 @@ const QuizView = ({ questions, documentId }) => {
           <button
             onClick={handleSubmit}
             disabled={Object.keys(userAnswers).length !== questions.length}
-            className="rounded-md bg-[--poppy] px-6 py-2 text-white hover:bg-[--poppy-dark] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full md:w-auto rounded-md bg-[--poppy] px-4 py-2 text-sm md:text-base text-white hover:bg-[--poppy-dark] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Submit Quiz
           </button>
