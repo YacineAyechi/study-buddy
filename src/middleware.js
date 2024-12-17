@@ -19,9 +19,7 @@ export async function middleware(request) {
   // Additional check for admin routes
   if (isAdminPage && token) {
     try {
-      const secret = new TextEncoder().encode(
-        process.env.NEXT_PUBLIC_JWT_SECRET
-      );
+      const secret = new TextEncoder().encode(process.env.JWT_SECRET);
       const { payload } = await jwtVerify(token.value, secret);
 
       if (!payload || payload.role !== "admin") {
