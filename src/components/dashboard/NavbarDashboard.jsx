@@ -117,7 +117,6 @@ const NavbarDashboard = () => {
         setNotificationCount(data.count);
       } catch (error) {
         console.error("Error fetching notification count:", error);
-        // Set count to 0 on error to prevent UI issues
         setNotificationCount(0);
       }
     };
@@ -234,22 +233,18 @@ const NavbarDashboard = () => {
                     </div>
                     <div className="flex items-center bg-white text-[--poppy] rounded-lg p-2 mt-4 w-full justify-center transition-colors hover:bg-slate-100">
                       <BsStars className="text-xl" />
-                      <button className="w-full text-[14px] font-bold">
+                      <Link
+                        href="/#pricing"
+                        className="w-full text-[14px] font-bold"
+                      >
                         Upgrade to Pro
-                      </button>
+                      </Link>
                     </div>
                   </div>
                 </div>
               )}
 
-              {!open && (
-                // <div className="absolute bottom-14 left-0 right-0 mb-2 transition-colors">
-                //   <motion.div className="relative cursor-pointer p-2 flex justify-center mx-auto items-center rounded-md transition-colors bg-[--poppy] text-white h-full w-10 place-content-center text-lg">
-                //     <BsStars className="text-xl" />
-                //   </motion.div>
-                // </div>
-                <></>
-              )}
+              {!open && <></>}
             </>
           )}
 

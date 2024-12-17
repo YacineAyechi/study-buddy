@@ -218,7 +218,7 @@ const DashboardContent = () => {
         <StatCard
           icon={<RiCoinLine />}
           title="Document Credits"
-          value={`${user?.tokens || 0}/${user?.plan === "free" ? "2" : "100"}`}
+          value={`${user?.tokens || 0}/${user?.plan === "free" ? "2" : "10"}`}
           subtitle={`${user?.plan === "free" ? "Daily" : "Monthly"} limit`}
         />
       </div>

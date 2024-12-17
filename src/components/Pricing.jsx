@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { FiCheckCircle, FiXSquare } from "react-icons/fi";
+import SubscriptionButton from "./SubscriptionButton";
 import Link from "next/link";
 
 const Pricing = () => {
@@ -20,6 +21,8 @@ const Pricing = () => {
             price="0"
             statement="Perfect for students just getting started with AI-powered studying."
             highlight
+            selected={selected}
+            buttonText="Get Started" // Add buttonText prop
             items={[
               {
                 children: "2 Documents per day",
@@ -41,10 +44,6 @@ const Pricing = () => {
                 children: "Community Support",
                 checked: true,
               },
-              // {
-              //   children: "Advanced Analytics",
-              //   checked: false,
-              // },
             ]}
           />
           <PriceColumn
@@ -52,9 +51,11 @@ const Pricing = () => {
             price={selected === "monthly" ? "15" : "10"}
             statement="For serious students who want to maximize their study efficiency."
             highlight
+            highlightTwo
+            selected={selected}
             items={[
               {
-                children: "100 Documents per month",
+                children: "10 Documents per month",
                 checked: true,
               },
               {
@@ -73,43 +74,8 @@ const Pricing = () => {
                 children: "Priority Support",
                 checked: true,
               },
-              // {
-              //   children: "Advanced Analytics",
-              //   checked: true,
-              // },
             ]}
           />
-          {/* <PriceColumn
-            title="Team"
-            price={selected === "monthly" ? "30" : "20"}
-            statement="Perfect for study groups and educational institutions."
-            items={[
-              {
-                children: "Everything in Pro",
-                checked: true,
-              },
-              {
-                children: "Team Collaboration",
-                checked: true,
-              },
-              {
-                children: "Progress Tracking",
-                checked: true,
-              },
-              {
-                children: "Admin Dashboard",
-                checked: true,
-              },
-              {
-                children: "Custom Integration",
-                checked: true,
-              },
-              {
-                children: "24/7 Support",
-                checked: true,
-              },
-            ]}
-          /> */}
         </div>
       </section>
     </div>
@@ -117,7 +83,16 @@ const Pricing = () => {
 };
 
 export default Pricing;
-const PriceColumn = ({ highlight, title, price, statement, items }) => {
+const PriceColumn = ({
+  highlight,
+  highlightTwo,
+  title,
+  price,
+  statement,
+  items,
+  selected,
+  buttonText,
+}) => {
   return (
     <div
       style={{
@@ -127,11 +102,11 @@ const PriceColumn = ({ highlight, title, price, statement, items }) => {
         highlight ? "border-2 border-zinc-900 bg-white" : ""
       }`}
     >
-      {/* {highlight && (
+      {highlightTwo && (
         <span className="absolute right-4 top-0 -translate-y-1/2 rounded-full bg-[--poppy] px-2 py-0.5 text-sm text-white">
-          Most Popular
+          Testing Stripe
         </span>
-      )} */}
+      )}
 
       <p className="mb-6 text-xl font-medium">{title}</p>
       <div className="mb-6 flex items-center gap-3">
@@ -175,17 +150,27 @@ const PriceColumn = ({ highlight, title, price, statement, items }) => {
         ))}
       </div>
 
-      <Link href="/sign-in">
-        <button
-          className={`w-full rounded-lg p-3 text-base uppercase text-white transition-colors ${
-            highlight
-              ? "bg-[--poppy] hover:bg-[--poppy-dark]"
-              : "bg-zinc-900 hover:bg-zinc-700"
-          }`}
+      {title.toLowerCase() === "basic" ? (
+        <Link href="/sign-up">
+          <button className="mt-4 w-full rounded bg-[--poppy] py-2 text-white">
+            {buttonText}
+          </button>
+        </Link>
+      ) : (
+        <SubscriptionButton
+          priceId={
+            title.toLowerCase() === "pro"
+              ? selected === "monthly"
+                ? process.env.NEXT_PUBLIC_STRIPE_PRO_MONTHLY_PRICE_ID
+                : process.env.NEXT_PUBLIC_STRIPE_PRO_YEARLY_PRICE_ID
+              : ""
+          }
+          plan={title.toLowerCase()}
+          interval={selected}
         >
-          Try it now
-        </button>
-      </Link>
+          {title.toLowerCase() === "basic" ? "Get Started" : "Upgrade to Pro"}
+        </SubscriptionButton>
+      )}
     </div>
   );
 };
